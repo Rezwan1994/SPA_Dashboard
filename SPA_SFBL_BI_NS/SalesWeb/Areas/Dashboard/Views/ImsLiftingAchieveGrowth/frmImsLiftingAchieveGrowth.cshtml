@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Dashboard";
+}
+@model SalesWeb.Areas.Dashboard.Models.BEL.ImsLiftingAchieveGrowthModel.DashboardGraphModel
+@using Newtonsoft.Json;
+<script>
+    var mtdRefreshDate = '@Model.mtdModel.REFRESH_DATE';
+    var mtdCymTargetVal = '@Model.mtdModel.CYM_TARGET_VAL';
+    var mtdImsSalesVal = '@Model.mtdModel.CYM_IMS_SALES_VAL';
+    var mtdPymSalesVal = '@Model.mtdModel.PYM_IMS_SALES_VAL';
+    var mtdGrowth = '@Model.mtdModel.GROWTH';
+    var mtdAchPct = '@Model.mtdModel.ACH_PCT';
+
+    var ReportDate = '@ViewBag.ReportDate';
+    var ytdRefreshDate = '@Model.ytdModel.REFRESH_DATE';
+    var ytdTargetVal = '@Model.ytdModel.TARGET_VAL';
+    var ytdCyImsSalesVal = '@Model.ytdModel.CY_IMS_SALES_VAL';
+    var ytdPySalesVal = '@Model.ytdModel.PY_IMS_SALES_VAL';
+    var ytdGrowth = '@Model.ytdModel.GROWTH';
+    var ytdAchPct = '@Model.ytdModel.ACH_PCT';
+
+
+    var liftingRefreshDate = '@Model.liftingYearlyModel.REFRESH_DATE';
+    var liftingTargetVal = '@Model.liftingMonthlyModel.Net_Lifting_TARGET_VALUE';
+    var liftingCymActualValue = '@Model.liftingMonthlyModel.CYM_ACTUAL_LIFTING_VALUE';
+    var liftingPymActualValue = '@Model.liftingMonthlyModel.PYM_ACTUAL_LIFTING_VALUE';
+    var liftingGrowth = '@Model.liftingMonthlyModel.GROWTH';
+    var liftingAchPct = '@Model.liftingMonthlyModel.ACH_PCT';
+
+    var liftingYearlyRefreshDate = '@Model.liftingYearlyModel.REFRESH_DATE';
+    var liftingYearlyTargetVal = '@Model.liftingYearlyModel.Net_Lifting_TARGET_VALUE';
+    var liftingYearlyCymActualValue = '@Model.liftingYearlyModel.CY_ACTUAL_LIFTING_VALUE';
+    var liftingYearlyPymActualValue = '@Model.liftingYearlyModel.PY_ACTUAL_LIFTING_VALUE';
+    var liftingYearlyGrowth = '@Model.liftingYearlyModel.GROWTH';
+    var liftingYearlyAchPct = '@Model.liftingYearlyModel.ACH_PCT';
+
+</script>
+
+<style>
+    .ims_wrapper, .lifting_wrapper {
+        height: 370px;
+        /* max-width: 920px; */
+        /* margin: 0px auto; */
+        width: 100%;
+        display: flex;
+        margin-left: 20px;
+    }
+
+    #chartContainer, #chartContainer2 {
+        float: left;
+        width: 45%;
+    }
+
+    #chartContainer1, #chartContainer3 {
+        float: right;
+        width: 45%;
+        margin-left: 35px;
+    }
+</style>
+
+<section class="content-header" style="top:-25px">
+    <h1>
+        Dashboard
+        <small>Control panel</small>
+    </h1>
+</section>
+<section class="">
+    <div class="">
+        <div class="lifting_wrapper" >
+            <div id="chartContainer2"></div>
+            <div id="chartContainer3"></div>
+        </div>
+        <div class="ims_wrapper" style="margin-top:30px;">
+            <div id="chartContainer"></div>
+            <div id="chartContainer1"></div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/Dashboard")
+</section>
+
+
+
+

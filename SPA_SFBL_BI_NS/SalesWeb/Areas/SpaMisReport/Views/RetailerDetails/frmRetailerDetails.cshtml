@@ -1,0 +1,351 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmRetailerDetails.js"></script>
+<div ng-app="myApp" ng-controller="RetailerDetailsCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmRetailerDetails">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <form role="form">
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Report Type</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnReportTypeChange()" ng-model="frmRetailerDetails.RepType" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportTypeName}}</ui-select-match>
+                                                <ui-select-choices repeat="reptypes in RepTypes | propsFilter: {ReportTypeName: $select.search, ReportTypeValue: $select.search}">
+                                                    <div ng-bind-html="reptypes.ReportTypeName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+
+                                        <div class="col-md-2">
+                                            <label class="control-label">Division</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnDivisionClick()" ng-model="frmRetailerDetails.Division" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.DivisionName}}</ui-select-match>
+                                                <ui-select-choices repeat="divisions in Divisions | propsFilter: {DivisionName: $select.search, DivisionCode: $select.search}">
+                                                    <div ng-bind-html="divisions.DivisionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+divisions.DivisionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">{{FormDate}}</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabledFromDate" class="form-control pull-right datepicker clickable" id="FromDate" name="FromDate" ng-model="FromDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Region</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnRegionClick()" ng-model="frmRetailerDetails.Region" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.RegionName}}</ui-select-match>
+                                                <ui-select-choices repeat="regions in Regions | propsFilter: {RegionName: $select.search, RegionCode: $select.search}">
+                                                    <div ng-bind-html="regions.RegionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+regions.RegionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabledToDate" class="form-control pull-right datepicker clickable" id="ToDate" name="ToDate" ng-model="ToDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Area</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnAreaClick()" ng-model="frmRetailerDetails.Area" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.AreaName}}</ui-select-match>
+                                                <ui-select-choices repeat="areas in Areas | propsFilter: {AreaName: $select.search, AreaCode: $select.search}">
+                                                    <div ng-bind-html="areas.AreaName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+areas.AreaCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Territory</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnTerritoryClick()" ng-model="frmRetailerDetails.Territory" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.TerritoryName}}</ui-select-match>
+                                                <ui-select-choices repeat="territories in Territories | propsFilter: {TerritoryName: $select.search, TerritoryCode: $select.search} | limitTo: 100" value="{{$selected.TerritoryCode}}">
+                                                    <div ng-bind-html="territories.TerritoryName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+territories.TerritoryCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Customer</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnCustomerClick()" ng-model="frmRetailerDetails.Customer" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.CustomerName}}</ui-select-match>
+                                                <ui-select-choices repeat="customers in Customers | propsFilter: {CustomerName: $select.search, CustomerCode: $select.search}">
+                                                    <div ng-bind-html="customers.CustomerName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+customers.CustomerCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Market</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnMarketClick()" ng-model="frmRetailerDetails.Market" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.MarketName}}</ui-select-match>
+                                                <ui-select-choices repeat="Market in Markets | propsFilter: {MarketName: $select.search, MarketCode: $select.search}">
+                                                    <div ng-bind-html="Market.MarketName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+Market.MarketCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Route</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnRouteClick()" ng-model="frmRetailerDetails.Route" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.RouteName}}</ui-select-match>
+                                                <ui-select-choices repeat="Route in Routes | propsFilter: {RouteName: $select.search, RouteCode: $select.search}">
+                                                    <div ng-bind-html="Route.RouteName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+Route.RouteCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>*@
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Retailer Category</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white"  ng-model="frmRetailerDetails.Category" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.RetailerCategoryName}}</ui-select-match>
+                                                <ui-select-choices repeat="Category in Categories | propsFilter: {RetailerCategoryName: $select.search, RetailerCategoryCode: $select.search}">
+                                                    <div ng-bind-html="Category.RetailerCategoryName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+Category.RetailerCategoryCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Retailer Type</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                                <select class="form-control form-white input-sm" id="RetailerType" name="RetailerType" ng-model="RetailerType">
+                                                    <option value="ALL">ALL</option>
+                                                    <option value="Retailer">Retailer</option>
+                                                    <option value="Wholesale">Wholesale</option>
+                                                </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Retailer Location Type</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control form-white input-sm" id="RetailerLocationType" name="RetailerLocationType" ng-model="RetailerLocationType">
+                                                <option value="ALL">ALL</option>
+                                                <option value="Rural">Rural</option>
+                                                <option value="Semi-Urban">Semi Urban</option>
+                                                <option value="Urban/Metro">Urban/Metro</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Status</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control form-white input-sm" id="Status" name="Status" ng-model="Status" required>
+                                                <option value="ALL">ALL</option>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <div class="text-right  m-t-10">
+                                                <button type="button" class="btn btn-embossed btn-success" ng-click="GetRetailerDetails()" ng-class="{'btn-transparent': frmRetailerDetails.$invalid }" ng-disabled="frmRetailerDetails.$invalid"><i class="fa fa-search"></i>View</button>
+                                                <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="gridRetailerDetails" ui-grid="gridRetailerDetails" class="grid" style="height: 500px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+
+</script>
+
+
+
+
+
+
+

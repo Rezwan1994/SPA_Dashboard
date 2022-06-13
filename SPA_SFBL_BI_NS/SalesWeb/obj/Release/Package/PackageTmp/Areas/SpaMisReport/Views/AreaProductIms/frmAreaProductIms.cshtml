@@ -1,0 +1,119 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmAreaProductIms.js"></script>
+<form class="form" action="/AreaProductIms/RV" id="R1Form" method="post" name="H1Form" target="_blank">
+
+    <div ng-app="myApp" ng-controller="AreaProductImsCtrl">
+        <div class="loader LoaderStyle" ng-cloak data-loading>
+            <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+        </div>
+        <div class="form-horizontal" ng-form="frmAreaProductIms">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+                            <div class="box-header with-border">
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <h2 class="box-title">
+                                            <strong ng-cloak>{{FormTitle}}</strong>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Report Type</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnReportTypeChange()" ng-model="frmAreaProductIms.RepType" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportTypeName}}</ui-select-match>
+                                                <ui-select-choices repeat="reptypes in RepTypes | propsFilter: {ReportTypeName: $select.search, ReportTypeValue: $select.search}">
+                                                    <div ng-bind-html="reptypes.ReportTypeName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">Division</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnDivisionClick()" ng-model="frmAreaProductIms.Division" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.DivisionName}}</ui-select-match>
+                                                <ui-select-choices repeat="divisions in Divisions | propsFilter: {DivisionName: $select.search, DivisionCode: $select.search}">
+                                                    <div ng-bind-html="divisions.DivisionName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">From Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" name="FromDate" id="FromDate" ng-model="FromDate" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="control-label">Area</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnAreaClick()" ng-model="frmAreaProductIms.Area" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.AreaName}}</ui-select-match>
+                                                <ui-select-choices repeat="areas in Areas | propsFilter: {AreaName: $select.search, AreaCode: $select.search}">
+                                                    <div ng-bind-html="areas.AreaName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="ToDate" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <div class="text-right  m-t-10">
+                                                <button type="button" class="btn btn-embossed btn-success" ng-click="GetAreaProductIms()" ng-class="{'btn-transparent': frmAreaProductIms.$invalid }" ng-disabled="frmAreaProductIms.$invalid"><i class="fa fa-search"></i>View</button>
+                                                <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div id="gridAreaProductIms" ui-grid="gridAreaProductIms" class="grid" style="height: 340px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</form>
+<script>
+        $('.datepicker').datepicker({
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy',
+            changeMonth: true,
+            changeYear: true
+        })
+
+</script>
+
+
+
+
+
+

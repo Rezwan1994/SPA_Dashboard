@@ -1,0 +1,79 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmRoleUserConf.js"></script>
+<div ng-app="myApp" ng-controller="roleUserConfCtrl">
+    <div class="loader LoaderStyle"  ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmRoleUserConf">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong  ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmRoleUserConf.$invalid}" ng-disabled="frmRoleUserConf.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="GetRoleUserConfList()"><i class="fa fa-search"></i>&nbspSearch</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                             
+                                <div class="form-group">
+                                    <div class="col-md-2">
+                                        <label class="control-label required">Role</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="hidden" ng-model="Id" />
+                                        <ui-select class="form-control form-white" ng-cloak ng-change="OnRoleListClick()" ng-model="frmRoleUserConf.RoleInfo" theme="select2" required>
+                                            <ui-select-match placeholder="-- Please Select --">{{$select.selected.RoleName}}</ui-select-match>
+                                            <ui-select-choices repeat=" roles in Roles | propsFilter: {RoleName: $select.search}">
+                                                <div ng-bind-html="roles.RoleName | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="control-label required">User</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <ui-select class="form-control form-white" ng-cloak ng-model="frmRoleUserConf.UserInfo" theme="select2" required>
+                                            <ui-select-match placeholder="-- Please Select --">{{$select.selected.EmployeeName}}</ui-select-match>
+                                            <ui-select-choices repeat="users in Users | propsFilter: {EmployeeName: $select.search, EmployeeCode: $select.search}">
+                                                <div ng-bind-html="users.EmployeeName | highlight: $select.search"></div>
+                                                <small>
+                                                    <b>Employee Code: </b><span ng-bind-html="''+users.EmployeeCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                </div>
+                             
+                            <br />
+                            <br />
+                            <div id="gridR" ui-grid="gridRUCOptions" class="grid" style="height: 400px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+

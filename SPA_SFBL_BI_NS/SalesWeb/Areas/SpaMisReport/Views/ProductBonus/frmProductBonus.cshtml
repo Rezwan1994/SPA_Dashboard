@@ -1,0 +1,116 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmProductBonus.js"></script>
+<div ng-app="myApp" ng-controller="ProductBonusCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmProductBonus">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <form role="form">
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Product</label>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnChangeProduct()" ng-model="frmProductBonus.Product" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ProductName}}</ui-select-match>
+                                                <ui-select-choices repeat="Product in Products | propsFilter: {ProductName: $select.search, ProductCode: $select.search}">
+                                                    <div ng-bind-html="Product.ProductName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Product Code: </b><span ng-bind-html="''+Product.ProductCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                        <b>Pack Size: </b><span ng-bind-html="''+Product.PackSize | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">Effect From Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="FromDate" id="FromDate" name="FromDate" required readonly>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Effect To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="ToDate" id="ToDate" name="ToDate" required readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <div class="text-right  m-t-10">
+                                                <button type="button" class="btn btn-embossed btn-success" ng-click="GetProductBonus()" ng-class="{'btn-transparent': frmProductBonus.$invalid }" ng-disabled="frmProductBonus.$invalid"><i class="fa fa-search"></i>View</button>
+                                                <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div id="gridProductBonus" ui-grid="gridProductBonus" class="grid" style="height: 300px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+
+</script>
+
+
+
+
+
+

@@ -1,0 +1,247 @@
+﻿
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmCustomerWiseTradeProgCal.js"></script>
+<form class="form" action="/RetailerProductIms/RV" id="R1Form" method="post" name="H1Form" target="_blank">
+
+    <div ng-app="myApp" ng-controller="CustomerWiseTradeProgCalCtrl">
+        <div class="loader LoaderStyle" ng-cloak data-loading>
+            <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+        </div>
+        <div class="form-horizontal" ng-form="frmCustomerWiseTradeProgCal">
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-warning">
+                            <div class="box-header with-border">
+                                <div class="form-group">
+                                    <div class="col-md-5">
+                                        <h2 class="box-title">
+                                            <strong ng-cloak>{{FormTitle}}</strong>
+                                        </h2>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box-body">
+                                @*<form role="form">*@
+
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Report Type</label>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnReportTypeChange()" ng-model="frmCustomerWiseTradeProgCal.RepType" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportTypeName}}</ui-select-match>
+                                                <ui-select-choices repeat="reptypes in RepTypes | propsFilter: {ReportTypeName: $select.search, ReportTypeValue: $select.search}">
+                                                    <div ng-bind-html="reptypes.ReportTypeName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <label class="control-label">Division</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnDivisionClick()" ng-model="frmCustomerWiseTradeProgCal.Division" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.DivisionName}}</ui-select-match>
+                                                <ui-select-choices repeat="divisions in Divisions | propsFilter: {DivisionName: $select.search, DivisionCode: $select.search}">
+                                                    <div ng-bind-html="divisions.DivisionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+divisions.DivisionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" class="form-control" id="dCode" name="dCode" ng-model="dCode" readonly style="display: none" />
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">From Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" name="FromDate" id="FromDate" ng-model="FromDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Region</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnRegionClick()" ng-model="frmCustomerWiseTradeProgCal.Region" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.RegionName}}</ui-select-match>
+                                                <ui-select-choices repeat="regions in Regions | propsFilter: {RegionName: $select.search, RegionCode: $select.search}">
+                                                    <div ng-bind-html="regions.RegionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+regions.RegionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" class="form-control" id="rCode" name="rCode" ng-model="rCode" readonly style="display: none" />
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="ToDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Area</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnAreaClick()" ng-model="frmCustomerWiseTradeProgCal.Area" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.AreaName}}</ui-select-match>
+                                                <ui-select-choices repeat="areas in Areas | propsFilter: {AreaName: $select.search, AreaCode: $select.search}">
+                                                    <div ng-bind-html="areas.AreaName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+areas.AreaCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <input type="text" class="form-control" id="aCode" name="aCode" ng-model="aCode" readonly style="display: none" />
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Territory</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnTerritoryClick()" ng-model="frmCustomerWiseTradeProgCal.Territory" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.TerritoryName}}</ui-select-match>
+                                                <ui-select-choices repeat="territories in Territories | propsFilter: {TerritoryName: $select.search, TerritoryCode: $select.search} | limitTo: 100" value="{{$selected.TerritoryCode}}">
+                                                    <div ng-bind-html="territories.TerritoryName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+territories.TerritoryCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <input type="text" class="form-control" id="tCode" name="tCode" ng-model="tCode" readonly style="display: none" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Customer</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control" ng-change="OnCustomerClick()" ng-model="frmCustomerWiseTradeProgCal.Customer" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.CustomerName}}</ui-select-match>
+                                                <ui-select-choices repeat="customers in Customers | propsFilter: {CustomerName: $select.search, CustomerCode: $select.search}">
+                                                    <div ng-bind-html="customers.CustomerName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+customers.CustomerCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <input type="text" class="form-control" id="cCode" name="cCode" ng-model="cCode" readonly style="display: none" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">Program No</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ui-select class="form-control" ng-model="frmCustomerWiseTradeProgCal.TradeProgram" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.TradeProgramName}}</ui-select-match>
+                                                <ui-select-choices repeat="tradeProgram in TradePrograms | propsFilter: {TradeProgramName: $select.search, TradeProgramNo: $select.search}">
+                                                    <div ng-bind-html="tradeProgram.TradeProgramName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Program No: </b><span ng-bind-html="''+tradeProgram.TradeProgramNo | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                        <b>Status: </b><span ng-bind-html="''+tradeProgram.TradeProgramStatus | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                        <b>Duration: </b><span ng-bind-html="''+tradeProgram.ProgramDuration | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                        <b>Efect: </b><span ng-bind-html="''+tradeProgram.EffectType | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <div class="text-right  m-t-10">
+                                                <button type="button" class="btn btn-embossed btn-success" ng-click="GetCustomerWiseTradeProgCal()" ng-class="{'btn-transparent': frmCustomerWiseTradeProgCal.$invalid }" ng-disabled="frmCustomerWiseTradeProgCal.$invalid"><i class="fa fa-search"></i>View</button>
+                                                <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div id="gridCustomerWiseTradeProgCal" ui-grid="gridCustomerWiseTradeProgCal" class="grid" style="height: 200px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</form>
+<script>
+        $('.datepicker').datepicker({
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd/mm/yyyy',
+            changeMonth: true,
+            changeYear: true
+        })
+
+</script>
+
+
+
+
+
+

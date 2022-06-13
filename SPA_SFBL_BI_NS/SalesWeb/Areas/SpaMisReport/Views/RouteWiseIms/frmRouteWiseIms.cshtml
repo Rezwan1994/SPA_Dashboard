@@ -1,0 +1,230 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmRouteWiseIms.js"></script>
+<div ng-app="myApp" ng-controller="RouteWiseImsCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmRouteWiseIms">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <form role="form">
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Report Type</label>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <input type="text" ng-model="Id" style="display: none" />
+                                            <ui-select class="form-control form-white" ng-change="OnReportTypeChange()" ng-model="frmRouteWiseIms.RepType" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportTypeName}}</ui-select-match>
+                                                <ui-select-choices repeat="reptypes in RepTypes | propsFilter: {ReportTypeName: $select.search, ReportTypeValue: $select.search}">
+                                                    <div ng-bind-html="reptypes.ReportTypeName | highlight: $select.search"></div>
+                                                    @*<small>
+                                                        <b>Code: </b><span ng-bind-html="''+reptypes.ReportTypeValue | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>*@
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+
+    @*<div class="col-md-3">
+        <select class="form-control form-white input-sm" ng-model="ReportType" ng-change="OnReportTypeChange()" required>
+            <option value="">--Select--</option>
+            <option value="Yesterday">{{varYesterday}}</option>
+            <option value="LastSevendays">Last 7 Days</option>
+            <option value="LastThirtydays">Last 30 Days</option>
+            <option value="ThisMonth">This Month</option>
+            <option value="LastMonth">Last Month</option>
+            <option value="MonthOnMonthCY">{{varThisYear}}</option>
+            <option value="MonthOnMonthLY">{{varLastYear}}</option>
+            <option value="MonthOnMonthLPY">{{varLastPrevYear}}</option>
+            <option value="CustomDate">Custom Date Range</option>
+        </select>
+    </div>*@
+
+
+                                        <div class="col-md-2">
+                                            <label class="control-label">Division</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-model="Id" style="display: none" />
+                                            <ui-select class="form-control form-white" ng-change="OnDivisionClick()" ng-model="frmRouteWiseIms.Division" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.DivisionName}}</ui-select-match>
+                                                <ui-select-choices repeat="divisions in Divisions | propsFilter: {DivisionName: $select.search, DivisionCode: $select.search}">
+                                                    <div ng-bind-html="divisions.DivisionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+divisions.DivisionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">From Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="FromDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Region</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-model="Id" style="display: none" />
+                                            <ui-select class="form-control form-white" ng-change="OnRegionClick()" ng-model="frmRouteWiseIms.Region" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.RegionName}}</ui-select-match>
+                                                <ui-select-choices repeat="regions in Regions | propsFilter: {RegionName: $select.search, RegionCode: $select.search}">
+                                                    <div ng-bind-html="regions.RegionName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+regions.RegionCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="ToDate" readonly>
+                                        </div>
+
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Area</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-model="Id" style="display: none" />
+                                            <ui-select class="form-control form-white" ng-change="OnAreaClick()" ng-model="frmRouteWiseIms.Area" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.AreaName}}</ui-select-match>
+                                                <ui-select-choices repeat="areas in Areas | propsFilter: {AreaName: $select.search, AreaCode: $select.search}">
+                                                    <div ng-bind-html="areas.AreaName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+areas.AreaCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Territory</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <ui-select class="form-control form-white" ng-change="OnTerritoryClick()" ng-model="frmRouteWiseIms.Territory" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.TerritoryName}}</ui-select-match>
+                                                <ui-select-choices repeat="territories in Territories | propsFilter: {TerritoryName: $select.search, TerritoryCode: $select.search} | limitTo: 100" value="{{$selected.TerritoryCode}}">
+                                                    <div ng-bind-html="territories.TerritoryName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+territories.TerritoryCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="control-label">Customer</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-model="Id" style="display: none" />
+                                            <ui-select class="form-control form-white" ng-change="OnCustomerClick()" ng-model="frmRouteWiseIms.Customer" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.CustomerName}}</ui-select-match>
+                                                <ui-select-choices repeat="customers in Customers | propsFilter: {CustomerName: $select.search, CustomerCode: $select.search}">
+                                                    <div ng-bind-html="customers.CustomerName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+customers.CustomerCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-5">
+                                            <label class="control-label"></label>
+                                        </div>
+                                    </div>
+
+
+                                    <br />
+                                    <div class="form-group">
+                                        <div class="col-md-7">
+                                            <div class="text-right  m-t-10">
+                                                <button type="button" class="btn btn-embossed btn-success" ng-click="GetRouteWiseIms()" ng-class="{'btn-transparent': frmRouteWiseIms.$invalid }" ng-disabled="frmRouteWiseIms.$invalid"><i class="fa fa-search"></i>View</button>
+                                                <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div id="gridRouteWiseIms" ui-grid="gridRouteWiseIms" class="grid" style="height: 200px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+
+</script>
+
+
+
+
+
+

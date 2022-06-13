@@ -1,0 +1,133 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmUserInfo.js"></script>
+<div ng-app="myApp" ng-controller="userInfoCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmUserInfo">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmUserInfo.$invalid}" ng-disabled="frmUserInfo.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="SearchData()"><i class="fa fa-search"></i>&nbspSearch</button>*@
+                                        <!--<button type="button" class="btn btn-embossed btn-success" ng-click="GetLocationName()"><i class="fa fa-search"></i>&nbspSearch</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">User Id</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="UserId" name="UserId" ng-model="UserId" placeholder="Auto Generated" disabled>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Status</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control form-white input-sm" ng-model="Status" required>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">User Name</label>
+                                </div>
+                                <div class="col-md-3" ng-class="{'has-error':frmUserInfo.UserName.$error.maxlength}">
+                                    <input type="text" class="form-control" id="UserName" name="UserName" ng-model="UserName" placeholder="Enter User Name" required ng-maxlength="50">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="control-label required">User Password</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="Password" name="Password" ng-model="Password" placeholder="Enter Password" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Access Location</label>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <select class="form-control input-sm" ng-model="AccessLocation" name="AccessLocation" id="AccessLocation" ng-disabled="isDisableAccessLoc" required > @*ng-change="GetLocation()"*@
+                                        <option value="National">National</option>
+                                        @*  <option value="Depot">Depot</option>
+                                            <option value="Division">Division</option>
+                                            <option value="Region">Region</option>
+                                            <option value="Area">Area</option>
+                                            <option value="Territory">Territory</option>  *@
+                                    </select>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="control-label required">Company</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control" ng-model="frmUserInfo.Location" theme="select2" ng-cloak required ng-disabled="isLocationDisable">
+                                        <ui-select-match placeholder="--Select--">{{$select.selected.LocationName}}</ui-select-match>
+                                        <ui-select-choices repeat="locations in Locations | propsFilter: {LocationName: $select.search, LocationCode: $select.search}">
+                                            <div ng-bind-html="locations.LocationName | highlight: $select.search"></div>
+                                            <small>
+                                                <b>Code: </b><span ng-bind-html="''+locations.LocationCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                <b>Type: </b><span ng-bind-html="''+locations.LocationType | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Employee Name</label>
+                                </div>
+                                <div class="col-md-0">
+                                    <input type="hidden" readonly class="form-control" id="EmployeeCode" name="EmployeeCode" ng-model="EmployeeCode">
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control form-white" on-select="OnEmployeeClick()" ng-model="frmUserInfo.Employee" theme="select2" ng-cloak required ng-disabled="isEmployeeDisable">
+                                        <ui-select-match placeholder="-- Select --">{{$select.selected.EmployeeName}}</ui-select-match>
+                                        <ui-select-choices repeat="employees in Employees | propsFilter: {EmployeeName: $select.search, EmployeeCode: $select.search}">
+
+                                            <div ng-bind-html="employees.EmployeeName | highlight: $select.search"></div>
+
+                                            <small>
+                                                <b>Code: </b><span ng-bind-html="''+employees.EmployeeCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                            </small>
+
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="gridUserInfo" ui-grid="gridUserInfo" class="grid" style="height: 400px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+        </section>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+@model SalesWeb.Areas.Dashboard.Models.BEL.DashboardModel
+<div class="inner">
+    <h3 style="color: white;" class="blink">@string.Format("{0:N}", Model.OrderModel.OrderValue) cr</h3>
+    <p class="subtitle">Today order value</p>
+</div>
+<div class=" " style="margin-bottom:20px;">
+    <h3 style="color:black;" class="blink">@string.Format("{0:N}", Model.SalesModel.SalesValue) cr</h3>
+    <p class="subtitle">Today Sales value</p>
+</div>
+<div style="font-weight: bold; color: navajowhite;">
+    <p>No of Schedule Outlet: 33</p>
+    <p>No of Ordering Outlet: 33</p>
+    <p>No of Retailer Outlet: 33</p>
+</div>
+
+
+<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+

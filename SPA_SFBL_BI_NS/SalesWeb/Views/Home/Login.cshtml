@@ -1,0 +1,450 @@
+﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@*@{
+        Layout = null;
+    }*@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SPA MIS | Log in</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="~/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/Ionicons/css/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Content/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/iCheck/square/blue.css" rel="stylesheet" />
+
+    <script src="~/Content/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/AngularModules/angular.js"></script>
+    <script src="~/Content/AngularModules/Login.js"></script>
+    <script src="~/Content/AngularModules/angular-animate.js"></script>
+    <script src="~/Content/AngularModules/angular-touch.js"></script>
+    <link href="~/Content/AngularModules/Toastr/toastr.css" rel="stylesheet" />
+    <script src="~/Content/AngularModules/Toastr/toastr.js"></script>
+    <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/plugins/iCheck/icheck.min.js"></script>
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+    <style>
+        .login-logo, .register-logo {
+            text-align: left;
+        }
+
+        .login-box-body, .register-box-body {
+            background: #74b549;
+            padding: 20px;
+            border-top: 0;
+            color: #666;
+        }
+
+        a {
+            text-decoration: none;
+            color: #666;
+        }
+
+            a:hover {
+                color: #1bc1a3;
+            }
+
+        #wrapper {
+            width: 54%;
+            border: 1px solid #66BC51;
+            border-radius: 25px;
+            height: 422px;
+            position: relative;
+            color: #fff;
+            background-color: #66BC51;
+            text-shadow: rgba(0,0,0,0.1) 2px 2px 0px;
+        }
+
+        .btn {
+            width: 100% !important;
+            font-size: 14px;
+        }
+
+        #slider-wrap {
+            width: 680px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            margin: 25px;
+        }
+
+            #slider-wrap ul#slider {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+                #slider-wrap ul#slider li {
+                    float: left;
+                    position: relative;
+                    width: 720px;
+                    height: 400px;
+                    margin-left: -40px;
+                }
+
+        .imgItem img {
+            text-align: center;
+            line-height: 400px;
+            display: block;
+            width: 680px;
+            font-size: 90px;
+            height: 400px;
+        }
+
+
+        /*btns*/
+        .btns {
+            position: absolute;
+            width: 50px;
+            height: 60px;
+            top: 50%;
+            margin-top: -25px;
+            line-height: 57px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(0,0,0,0.1);
+            z-index: 100;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -khtml-user-select: none;
+            -ms-user-select: none;
+            -webkit-transition: all 0.1s ease;
+            -moz-transition: all 0.1s ease;
+            -o-transition: all 0.1s ease;
+            -ms-transition: all 0.1s ease;
+            transition: all 0.1s ease;
+        }
+
+            .btns:hover {
+                background: rgba(0,0,0,0.3);
+            }
+
+        #next {
+            right: -50px;
+            border-radius: 7px 0px 0px 7px;
+        }
+
+        #previous {
+            left: -50px;
+            border-radius: 0px 7px 7px 7px;
+        }
+
+        #counter {
+            top: 30px;
+            right: 35px;
+            width: auto;
+            position: absolute;
+        }
+
+        #slider-wrap.active #next {
+            right: 0px;
+        }
+
+        #slider-wrap.active #previous {
+            left: 0px;
+        }
+
+
+        /*bar*/
+        #pagination-wrap {
+            min-width: 20px;
+            margin-top: 350px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 15px;
+            position: relative;
+            text-align: center;
+        }
+
+            #pagination-wrap ul {
+                width: 100%;
+            }
+
+                #pagination-wrap ul li {
+                    margin: 0 4px;
+                    display: inline-block;
+                    width: 5px;
+                    height: 5px;
+                    border-radius: 50%;
+                    background: #fff;
+                    opacity: 0.5;
+                    position: relative;
+                    top: 0;
+                }
+
+                    #pagination-wrap ul li.active {
+                        width: 12px;
+                        height: 12px;
+                        top: 3px;
+                        opacity: 1;
+                        box-shadow: rgba(0,0,0,0.1) 1px 1px 0px;
+                    }
+
+                #slider-wrap ul, #pagination-wrap ul li {
+                    -webkit-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+                    -moz-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+                    -o-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+                    -ms-transition: all 0.3s cubic-bezier(1,.01,.32,1);
+                    transition: all 0.3s cubic-bezier(1,.01,.32,1);
+                }
+
+        .bodyContent {
+            display: flex;
+        }
+
+        .imgItem {
+            width: 680px;
+        }
+
+        .loginsection {
+            width: 45%;
+        }
+        .remember_section {
+            margin-top: 5px;
+        }
+
+            .remember_section span {
+                color: white;
+                font-size: 15px;
+                margin-left: 5px;
+            }
+    </style>
+
+    <script type="text/javascript">
+        window.MyApp = {};
+        MyApp.rootPath = '@Url.Content("~/")';
+    </script>
+</head>
+<body>
+    <div ng-app="myApp" ng-controller="myCtrl" style="overflow:  hidden;display:flex;width:100%;" class="myApp">
+        <div class="loader LoaderStyle" ng-cloak data-loading>
+            <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+
+        <div class="loginsection">
+            <div class="row" style="padding-left:60px">
+                <div class="col-sm-4" style="padding-left:0px">
+                    <div class="login-box" style="margin-top:50px;opacity: .6;">
+                        <div class="login-box-body">
+                            <div class="text-center">
+                                <p style="color: white;font-weight:900; font-size: 25px;">Login</p>
+                            </div>
+
+                            <div ng-form="frmLogin">
+                                <div class="form-group has-feedback">
+                                    <input type="text" class="form-control" placeholder="Username" ng-model="Username" autofocus required>
+                                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="password" class="form-control" placeholder="Password" ng-model="Password" ng-keydown="$event.keyCode === 13 && LoginSystem()" required>
+                                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button type="submit" style="color:white;font-weight:bold;" class="btn btn-primary btn-block btn-flat" ng-click="LoginSystem()" >Sign In</button>
+                                    </div>
+                                </div>
+                                <div class="remember_section">
+                                    <input type="checkbox" class="rememberme" />
+                                    <span>Remember me</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+        <div id="wrapper">
+
+            <div id="slider-wrap">
+                <ul id="slider">
+                    <li>
+                        <img src="~/Content/img/Slider/Slider1.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider2.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider3.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider4.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider5.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider6.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider7.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider8.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider9.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider11.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider12.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider13.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider14.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider15.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider16.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider17.jpg" class="imgItem" />
+                    </li>
+
+                    <li>
+                        <img src="~/Content/img/Slider/Slider18.jpg" class="imgItem" />
+                    </li>
+                    <li>
+                        <img src="" class="imgItem" />
+                    </li>
+                </ul>
+
+
+                <div class="btns" id="next"><i class="fa fa-arrow-right" style="margin-top: 25px;"></i></div>
+                <div class="btns" id="previous"><i class="fa fa-arrow-left" style="margin-top: 25px;"></i></div>
+                @*<div id="counter"></div>*@
+                <div id="pagination-wrap">
+                    <ul></ul>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+        });
+
+        var pos = 0;
+        var totalSlides = $('.imgItem').length;
+        var sliderWidth = $('#slider-wrap').width();
+        $(document).ready(function () {
+
+            $(".myApp").css("height", window.innerHeight - 202);
+
+            $('#slider-wrap ul#slider').width($('#slider-wrap').width() * $('.imgItem').length);
+
+            $('#next').click(function () {
+                slideRight();
+            });
+            $('#previous').click(function () {
+                slideLeft();
+            });
+            var autoSlider = setInterval(slideRight, 3000);
+
+
+            $.each($('.imgItem'), function () {
+
+                var c = $(this).attr("data-color");
+                $(this).css("background", c);
+
+                var li = document.createElement('li');
+                $('#pagination-wrap ul').append(li);
+            });
+            countSlides();
+            pagination();
+
+            $('#slider-wrap').hover(
+                function () { $(this).addClass('active'); clearInterval(autoSlider); },
+                function () { $(this).removeClass('active'); autoSlider = setInterval(slideRight, 3000); }
+            );
+        });
+
+        function slideLeft() {
+            pos--;
+            if (pos == -1) { pos = $('.imgItem').length - 1; }
+            $('#slider-wrap ul#slider').css('left', -($('#slider-wrap').width() * pos));
+            countSlides();
+            pagination();
+        }
+
+
+        function slideRight() {
+            pos++;
+            if (pos == $('.imgItem').length - 1) { pos = 0; }
+            $('#slider-wrap ul#slider').css('left', -($('#slider-wrap').width() * pos));
+
+            //*> optional
+            countSlides();
+            pagination();
+        }
+
+        function countSlides() {
+            $('#counter').html(pos + 1 + ' / ' + ($('.imgItem').length - 1));
+        }
+
+        function pagination() {
+            $('#pagination-wrap ul li').removeClass('active');
+            $('#pagination-wrap ul li:eq(' + pos + ')').addClass('active');
+        }
+    </script>
+</body>
+</html>
+
+

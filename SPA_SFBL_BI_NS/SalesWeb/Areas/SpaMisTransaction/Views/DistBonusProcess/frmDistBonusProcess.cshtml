@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisTransaction/ngCode/frmDistBonusProcess.js"></script>
+<script>
+    var CurrentDate = '@ViewBag.CurentDate';
+</script>
+<div ng-app="myApp" ng-controller="DistBonusProcessCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmDistBonusProcess">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmDistBonusProcess.$invalid|| isSaveDisable}" ng-disabled="frmDistBonusProcess.$invalid || isSaveDisable "><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="SearchData()"><i class="fa fa-search"></i>&nbspSearch</button>*@
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="DeleteProcess()"><i class="fa fa-remove"></i>&nbsp Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    <label class="control-label">Process No</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="hidden" class="form-control" id="ProcessSlno" name="ProcessSlno" ng-model="ProcessSlno">
+                                    <input type="text" class="form-control" id="ProcessNo" name="ProcessNo" ng-model="ProcessNo" readonly>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="control-label">Process Date</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" ng-disabled="isProcessDateDisabled" class="form-control pull-right" ng-model="ProcessDate" required readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-group"> 
+                                
+                                 <div class="col-md-2">
+                                    <label class="control-label">Bonus Start Date</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="BonusStartDate" required readonly>  @*datepicker clickable*@
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label class="control-label">Bonus End Date</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="BonusEndDate" required readonly >  @*datepicker clickable*@
+                                </div>
+                            </div>
+
+                            @*<div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">Approved Status</label>
+                                </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="ApprovedStatus" name="ApprovedStatus" ng-model="ApprovedStatus" readonly>
+                                    </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Approved Date</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control pull-right " ng-model="ApprovedDate" readonly>
+                                </div>
+                            </div>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gridSearch" ui-grid="gridSearch" class="grid" style="height: 400px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+
+        </section>
+    </div>
+
+</div>
+
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+</script>
+
+
+

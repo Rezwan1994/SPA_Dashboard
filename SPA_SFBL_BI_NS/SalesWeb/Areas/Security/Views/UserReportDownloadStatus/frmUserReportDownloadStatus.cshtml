@@ -1,0 +1,96 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Areas/Security/NgCode/frmUserReportDownloadStatus.js"></script>
+<div ng-app="myApp" ng-controller="UserReportDownloadStatusCtrl">
+
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+
+    <div class="form-horizontal" ng-form="frmUserReportDownloadStatus">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        @*<button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmUserReportDownloadStatus.$invalid}" ng-disabled="frmUserReportDownloadStatus.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>*@
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="SearchData()"><i class="fa fa-search"></i>&nbspSearch</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body">
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>User Information</legend>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label hidden required">ID</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="hidden" class="form-control" id="MstId" name="MstId" ng-model="MstId" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">User</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <ui-select class="form-control form-white" ng-change="OnUserClick()" ng-model="frmUserReportDownloadStatus.User" theme="select2" ng-disabled="isDisbleUser" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.UserName}}</ui-select-match>
+                                                <ui-select-choices repeat="user in users | propsFilter: {UserName: $select.search}">
+                                                    <div>
+                                                        <b>User Name: </b><span ng-bind-html="user.UserName | highlight: $select.search"></span>
+                                                    </div>
+                                                    <small>
+                                                        <b>Employee Code: </b> <span ng-bind-html="''+user.EmployeeCode | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                        <b>Employee Name: </b> <span ng-bind-html="''+user.EmployeeName | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <br />
+
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Report Download Status</legend>
+                                    <div id="gridUserReportDownloadStatus" ui-grid="gridUserReportDownloadStatus" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+
+

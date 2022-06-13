@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/Content/img/square_banner.png" type="image/png">
+    <title>SPA MIS</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Content/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/Content/jquery-ui-1.12.1/jquery-ui-1.12.1.css" rel="stylesheet" />
+    <script src="~/Content/chart.js/Chart.js"></script>-->
+    <link rel="stylesheet" href="~/Content/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Ionicons/css/ionicons.min.css">>
+    <link rel="stylesheet" href="/Content/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="~/Content/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="~/Content/ImageViewer/jquery.verySimpleImageViewer.css" rel="stylesheet" />
+    <link href="~/Content/css/Customize.css" rel="stylesheet" />
+    <style>
+        .row {
+            margin: 0;
+        }
+
+        .blur {
+            /* overflow: hidden; */
+            -webkit-filter: blur(13px);
+            -moz-filter: blur(13px);
+            -o-filter: blur(13px);
+            -ms-filter: blur(13px);
+            filter: blur(13px);
+        }
+
+        .LoaderStyle {
+            margin: 0px;
+            padding: 0px;
+            position: fixed;
+            right: -52%;
+            top: 40%;
+            width: 100%;
+            height: 100%;
+            z-index: 30001;
+            opacity: .8;
+            filter: alpha(opacity=70);
+        }
+    </style>
+
+
+    <script src="~/Content/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/jquery-ui-1.12.1/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Content/ImageViewer/jquery.verySimpleImageViewer.js"></script>
+    <script src="~/Content/ImageViewer/jquery.verySimpleImageViewer.min.js"></script>
+    <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/fastclick/lib/fastclick.js"></script>
+    <script src="~/Content/js/adminlte.min.js"></script>
+    <script src="~/Content/js/demo.js"></script>
+    <script src="~/Content/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AngularModules/angular.js"></script>
+    <script src="~/Content/AngularModules/app.js"></script>
+    
+
+    <script src="~/Content/AngularModules/ui-select/angular-sanitize.js"></script>
+    <script src="~/Content/AngularModules/angular-animate.js"></script>
+    <script src="~/Content/AngularModules/angular-touch.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/ui-grid-unstable.js"></script>
+    <link href="~/Content/AngularModules/ui-grid/ui-grid-unstable.css" rel="stylesheet" />
+    <script src="~/Content/AngularModules/ui-grid/csv.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/pdf_make.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/vfs_fonts.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/lodash.min.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/jszip.min.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/excel-builder.dist.js"></script>
+    <script src="~/Content/AngularModules/ui-select/select.js"></script>
+    <link href="~/Content/AngularModules/ui-select/select.css" rel="stylesheet" />
+    <link href="~/Content/AngularModules/Toastr/toastr.css" rel="stylesheet" />
+    <script src="~/Content/AngularModules/Toastr/toastr.js"></script>
+    <link href="~/Content/select2/select2.css" rel="stylesheet" />
+    
+    <script src="~/Content/js/amcharts.js"></script>
+    <script src="~/Content/js/pie.js"></script>
+    <script src="~/Content/js/serial.js"></script>
+    <script src="~/Content/js/light.js"></script>
+
+    <script type="text/javascript">
+        window.MyApp = {};
+        MyApp.rootPath = '@Url.Content("~/")';
+    </script>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini sidebar-mini-expand-feature">
+    <header class="main-header">
+        <a href="/Home/Index" class="logo">
+            <span class="logo-mini"> <img src="~/Content/img/SIL_mini.png" /></span>
+            <span class="logo-lg"><img src="~/Content/img/SIL.png" /></span>
+            
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu" style="background-color: #eee;">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="hidden-xs">@Session["EMPLOYEE_NAME"].ToString()</span>
+                            <img src="~/Content/img/Profile_user.jpg" class="user-image" alt="User Image">
+
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="~/Content/img/Profile_user.jpg" class="img-circle" alt="User Image">
+                                <p>
+                                    @Session["EMPLOYEE_NAME"].ToString()
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" id="chngPassLink" class="btn btn-warning btn-flat"><i class="fa fa-undo" aria-hidden="true"></i>&nbsp;Change Password</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" id="signOutLink" class="btn btn-danger btn-flat"><i class="fa fa-power-off" aria-hidden="true"></i>&nbsp;Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu" data-widget="tree">
+
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        @RenderBody()
+
+    </div>
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+
+        </div>
+        <strong>Copyright &copy;<a href="http://www.squareit.com.bd/software/HOME/software_home.html">Square InformatiX Ltd</a>.</strong> All rights
+        reserved.
+    </footer>
+
+    <script>
+    LoadMenu();
+    function LoadMenu() {
+        $.ajax({
+            url: "/Home/CreateMenu",
+            type: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (data) {
+                $(".sidebar-menu").append(data);
+                activeMenu();
+            }
+        }); 
+    }
+
+    $(function() {
+        $('#example1').DataTable();
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    });
+
+    $('#signOutLink').click(function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("LogOut", "Home", new { Area = "" })',
+            cache: false,
+            success: function (data) {
+                window.location.replace('@Url.Action("Login", "Home", new { Area = "" })');
+            },
+            error: function () {
+            }
+        });
+    });
+    $('#chngPassLink').click(function () {
+        window.location.replace('@Url.Action("frmChngPass", "ChangPass", new { Area = "Security" })');
+    });
+
+    $('.modal-content').resizable({
+        minHeight: 300,
+        minWidth: 300
+        });
+        $('.modal-content ').draggable();
+    $(".datepicker").keyup(function (e)
+    {
+        switch(e.keyCode) {
+        case 46:  
+            case 8:  
+                $(".datepicker").datepicker('setDate', null);
+            break;
+        default:
+            e.preventDefault();
+            break;
+        }
+        });
+
+    function activeMenu() {
+        var url = window.location;
+        $('ul.sidebar-menu a').filter(function() {
+            return this.href == url;
+        }).parent().siblings().removeClass('active').end().addClass('active');
+        $('ul.treeview-menu a').filter(function() {
+            return this.href == url;
+        }).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');
+    }
+    $('legend.collapsable').parents("fieldset").find('.form-group').hide();
+    $('legend.collapsable').parents("fieldset").find('.row').hide();
+    $('legend.collapsable').parents("fieldset").css({ "height": "35px" });
+    $('legend.collapsable').click(function () {
+        if ($(this).parents("fieldset").find('.form-group').is(':visible') || $(this).parents("fieldset").find('.row').is(':visible')) {
+            $(this).parents("fieldset").find('.form-group').hide();
+            $(this).parents("fieldset").find('.row').hide();
+            $(this).parents("fieldset").css({ "height": "35px"});
+        } else {
+            $(this).parents("fieldset").find('.form-group').show();
+            $(this).parents("fieldset").find('.row').show();
+            $(this).parents("fieldset").removeAttr("style");
+        }
+        if ($(this).children("i").hasClass('fa-plus-square-o')) {
+            $(this).children("i").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+        }
+        else if ($(this).children("i").hasClass('fa-minus-square-o')) {
+            $(this).children("i").removeClass("fa-minus-square-o").addClass("fa-plus-square-o");
+        }
+
+        return false;
+        });
+
+
+        $('legend.collapsable_open').parents("fieldset").find('.form-group').show();
+        $('legend.collapsable_open').parents("fieldset").find('.row').show();
+        $('legend.collapsable_open').parents("fieldset").css({ "height": "35px" });
+        $('legend.collapsable_open').click(function () {
+        if ($(this).parents("fieldset").find('.form-group').is(':visible') || $(this).parents("fieldset").find('.row').is(':visible')) {
+            $(this).parents("fieldset").find('.form-group').hide();
+            $(this).parents("fieldset").find('.row').hide();
+            $(this).parents("fieldset").css({ "height": "35px" });
+        } else {
+            $(this).parents("fieldset").find('.form-group').show();
+            $(this).parents("fieldset").find('.row').show();
+            $(this).parents("fieldset").removeAttr("style");
+        }
+        if ($(this).children("i").hasClass('fa-plus-square-o')) {
+            $(this).children("i").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+        }
+        else if ($(this).children("i").hasClass('fa-minus-square-o')) {
+            $(this).children("i").removeClass("fa-minus-square-o").addClass("fa-plus-square-o");
+        }
+
+        return false;
+    });
+
+
+
+    $(function(){
+        $('.slimScrollDiv').slimScroll({
+        });
+    });
+
+    </script>
+</body>
+</html>

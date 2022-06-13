@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "_LoginLayout";
+}
+
+
+<style>
+    body {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        background-position: center;
+        background-image: url(/Content/img/spa.gif);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    .footerSection {
+        width: 100%;
+        height: 70px;
+        background-color: #2E75BC;
+        display: flex;
+    }
+
+    .body-content {
+        height: 350px;
+        /*height:63%;*/
+    }
+
+    .footerSection img {
+        float: right;
+        float: right;
+        height: 60px;
+    }
+
+    .footerdesign {
+        width: 60%;
+        float: left;
+        font-size: 15px;
+        color: white;
+        font-style: italic;
+        font-weight: 400;
+    }
+
+        .footerdesign img {
+            height: 60px;
+            width: 789px;
+        }
+
+    .footerimg {
+        width: 40%;
+        float: right;
+        background-color: #F2F5E5;
+        width: 40%;
+        margin-top: 15px;
+        clip-path: polygon(0% 100%, 100% 100%, calc(100% - 0px) 0%, 0% 0%, calc(100% - 40px) 0%, 10% 0%);
+    }
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="~/Content/img/square_banner.png" type="image/png">
+    <title>SPA MIS</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Content/bootstrap/dist/css/bootstrap.min.css">
+    <link href="~/Content/jquery-ui-1.12.1/jquery-ui-1.12.1.css" rel="stylesheet" />
+    <script src="~/Content/chart.js/Chart.js"></script>
+    <link rel="stylesheet" href="~/Content/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="/Content/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/Content/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="~/Content/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="~/Content/ImageViewer/jquery.verySimpleImageViewer.css" rel="stylesheet" />
+    <link href="~/Content/css/Customize.css" rel="stylesheet" />
+    <style>
+        .row {
+            margin: 0;
+        }
+
+        .blur {
+            /* overflow: hidden; */
+            -webkit-filter: blur(13px);
+            -moz-filter: blur(13px);
+            -o-filter: blur(13px);
+            -ms-filter: blur(13px);
+            filter: blur(13px);
+        }
+
+        .LoaderStyle {
+            margin: 0px;
+            padding: 0px;
+            position: fixed;
+            right: -52%;
+            top: 40%;
+            width: 100%;
+            height: 100%;
+            z-index: 30001;
+            opacity: .8;
+            filter: alpha(opacity=70);
+        }
+    </style>
+
+
+    <script src="~/Content/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/jquery-ui-1.12.1/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Content/ImageViewer/jquery.verySimpleImageViewer.js"></script>
+    <script src="~/Content/ImageViewer/jquery.verySimpleImageViewer.min.js"></script>
+    <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Content/fastclick/lib/fastclick.js"></script>
+    <script src="~/Content/js/adminlte.min.js"></script>
+    <script src="~/Content/js/demo.js"></script>
+    <script src="~/Content/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/AngularModules/angular.js"></script>
+    <script src="~/Content/AngularModules/app.js"></script>
+
+
+    <script src="~/Content/AngularModules/ui-select/angular-sanitize.js"></script>
+    <script src="~/Content/AngularModules/angular-animate.js"></script>
+    <script src="~/Content/AngularModules/angular-touch.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/ui-grid-unstable.js"></script>
+    <link href="~/Content/AngularModules/ui-grid/ui-grid-unstable.css" rel="stylesheet" />
+    <script src="~/Content/AngularModules/ui-grid/csv.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/pdf_make.js"></script>
+    <script src="~/Content/AngularModules/ui-grid/vfs_fonts.js"></script>
+    <script src="~/Content/AngularModules/ui-select/select.js"></script>
+
+    <link href="~/Content/select2/select2.css" rel="stylesheet" />
+    <link href="~/Content/AngularModules/ui-select/select.css" rel="stylesheet" />
+
+
+    <link href="~/Content/AngularModules/Toastr/toastr.css" rel="stylesheet" />
+    <script src="~/Content/AngularModules/Toastr/toastr.js"></script>
+    <script src="~/Content/js/amcharts.js"></script>
+    <script src="~/Content/js/pie.js"></script>
+    <script src="~/Content/js/serial.js"></script>
+    <script src="~/Content/js/light.js"></script>
+</head>
+
+<body>
+    <div class="headersection">
+
+        <div class="menubar">
+            <div class="col-sm-4">
+                <img src="~/Content/img/logo_sfbl.png" />
+            </div>
+            <div class="col-sm-6">
+                <table>
+                    <tr>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/Brand1.jpg" alt="Radhuni" /></a></td>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/Brand2.png" /></a></td>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/Brand3.png" /></a></td>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/Brand4.jpg" /></a></td>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/Brand5.png" /></a></td>
+                        <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                        <td><a href="javascrip:void(0)"><img src="~/Content/img/group_logo.jpg" /></a></td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="body-content">
+        @RenderBody()
+        <footer style="margin-top: 17px;">
+            <div class="footerSection">
+                <div class="footerdesign">
+                    <img src="~/Content/img/SPA_logo.png" />
+                </div>
+                <div class="footerimg">
+                    <img src="~/Content/img/SILFooterLogo.png" />
+                </div>
+            </div>
+
+        </footer>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+
+

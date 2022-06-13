@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Areas/Security/NgCode/frmReportViewTracking.js"></script>
+<div ng-app="myApp" ng-controller="ReportViewTrackingCtrl">
+
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+
+    <div class="form-horizontal" ng-form="frmReportViewTracking">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="GetUserViewReportList()"><i class="fa fa-search"></i>&nbspView</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body">
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>User Information</legend>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label hidden required">ID</label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <input type="hidden" class="form-control" id="MstId" name="MstId" ng-model="MstId" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">User</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <ui-select class="form-control form-white" ng-change="OnUserClick()" ng-model="frmReportViewTracking.User" theme="select2" ng-disabled="isDisbleUser" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.UserName}}</ui-select-match>
+                                                <ui-select-choices repeat="user in users | propsFilter: {UserName: $select.search}">
+                                                    <div>
+                                                        <b>User Name: </b><span ng-bind-html="user.UserName | highlight: $select.search"></span>
+                                                    </div>
+                                                    <small>
+                                                        <b>Employee Code: </b> <span ng-bind-html="''+user.EmployeeCode | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                        <b>Employee Name: </b> <span ng-bind-html="''+user.EmployeeName | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">From Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="FromDate" readonly>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="control-label">To Date</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" ng-disabled="isDisabled" class="form-control pull-right datepicker clickable" ng-model="ToDate" readonly>
+                                        </div>
+
+                                    </div>
+
+                                </fieldset>
+                                <br />
+
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Report View Tracking</legend>
+                                    <div id="gridReportViewTracking" ui-grid="gridReportViewTracking" class="grid" style="height: 300px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+
+</script>
+

@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisReport/NgCode/frmFsoWiseFirstAndLastInvoice.js"></script>
+<div ng-app="myApp" ng-controller="FsoWiseFirstAndLastInvoiceCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmFsoWiseFirstAndLastInvoice">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+
+                                    <div>
+                                        <h2 class="box-title">
+                                            <strong ng-cloak>{{FormTitle}}</strong>
+                                        </h2>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="GetFsoWiseFirstAndLastInvoice()" ng-class="{'btn-transparent': frmFsoWiseFirstAndLastInvoice.$invalid }" ng-disabled="frmFsoWiseFirstAndLastInvoice.$invalid"><i class="fa fa-search"></i>View</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <form role="form">
+                                <div class="row">
+
+                                    <div class="form-group">
+
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Report Type</label>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnReportTypeChange()" ng-model="frmFsoWiseFirstAndLastInvoice.RepType" theme="select2" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportTypeName}}</ui-select-match>
+                                                <ui-select-choices repeat="reptypes in RepTypes | propsFilter: {ReportTypeName: $select.search, ReportTypeValue: $select.search}">
+                                                    <div ng-bind-html="reptypes.ReportTypeName | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+                                    <div id="gridFsoWiseFirstAndLastInvoice" ui-grid="gridFsoWiseFirstAndLastInvoice" class="grid" style="height: 500px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+</div>
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+
+</script>
+

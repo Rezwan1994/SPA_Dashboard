@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmMenuConfigure.js"></script>
+<div ng-app="myApp" ng-controller="menuConfigureCtrl">
+    <div class="loader LoaderStyle"  ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmMenuConfigure">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong  ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmMenuConfigure.$invalid}" ng-disabled="frmMenuConfigure.$invalid" ng-hide="ViewPerm == 'NO'"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Parent Menu</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control form-white" ng-change="OnParentMenuClick()" ng-model="frmMenuConfigure.ParentMenu" theme="select2" required>
+                                        <ui-select-match placeholder="-- Please Select --">{{$select.selected.ParentMenuName}}</ui-select-match>
+                                        <ui-select-choices repeat="parentMenus in ParentMenus | propsFilter: {ParentMenuName: $select.search, ParentSeq: $select.search}">
+                                            <div ng-bind-html="parentMenus.ParentMenuName | highlight: $select.search"></div>
+                                            <small>
+                                                <b>Seq: </b><span ng-bind-html="''+parentMenus.ParentSeq | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                <b>Display Name: </b><span ng-bind-html="''+parentMenus.DisplayName | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Parent Seq</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="ParentSeq" name="ParentSeq" ng-model="ParentSeq" placeholder="Seq" ng-readonly="ParentSeqReadonly" ng-blur="IsChildSeqExist()" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">Child Menu</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control form-white" ng-change="OnChildMenuClick()" ng-model="frmMenuConfigure.ChildMenu" theme="select2" >
+                                        <ui-select-match placeholder="-- Please Select --">{{$select.selected.ChildMenuName}}</ui-select-match>
+                                        <ui-select-choices repeat="childMenus in ChildMenus | propsFilter: {ChildMenuName: $select.search, ChildSeq: $select.search}">
+                                            <div ng-bind-html="childMenus.ChildMenuName | highlight: $select.search"></div>
+                                            <small>
+                                                <b>Seq: </b><span ng-bind-html="''+childMenus.ChildSeq | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                <b>Display Name: </b><span ng-bind-html="''+childMenus.DisplayName | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                            </small>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label">Child Seq</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="ChildSeq" name="ChildSeq" ng-model="ChildSeq" placeholder="Seq" ng-readonly="ChildSeqReadonly" ng-blur="IsParentSeqExist()">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label">URL</label>
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="Url" name="Url" ng-model="Url" placeholder="Url">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div id="gridMenuConfigure" ui-grid="gridMenuConfigureOptions" class="grid" style="height: 330px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+       
+           
+               
+           
+        
+</div>
+
+
+
+
+

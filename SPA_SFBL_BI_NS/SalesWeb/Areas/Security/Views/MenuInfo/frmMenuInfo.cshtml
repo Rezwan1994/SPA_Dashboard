@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmMenuInfo.js"></script>
+<div ng-app="myApp" ng-controller="menuCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmMenu">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmMenu.$invalid}" ng-disabled="frmMenu.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="GetMenuList()"><i class="fa fa-search"></i>&nbspSearch</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Menu Code</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="Id" name="Id" ng-model="Id" placeholder="Auto Generated" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Menu Name</label>
+                                </div>
+                                <div class="col-md-3" ng-class="{'has-error':frmMenu.Name.$error.maxlength}">
+                                    <input type="text" class="form-control" id="Name" name="Name" ng-model="Name" placeholder="Menu" ng-maxlength="50" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required"> Display Name</label>
+                                </div>
+                                <div class="col-md-3" ng-class="{'has-error':frmMenu.DisplayName.$error.maxlength}">
+                                    <input type="text" class="form-control" id="DisplayName" name="DisplayName" ng-model="DisplayName" placeholder="Display Name" ng-maxlength="50" required>
+                                </div>
+
+                                <div class="col-md-2" hidden>
+                                    <label class="control-label required">Menu Type</label>
+                                </div>
+
+                                <div class="col-md-3" hidden>
+                                    <input type="text" class="form-control" id="MenuType" name="MenuType" ng-model="MenuType" value="Menu" hidden>
+                                </div>
+
+                                <!-- <div class="col-md-3">
+                                     <select class="form-control form-white input-sm" ng-model="MenuType" required>
+                                         <option value="Module">Module</option>
+                                         <option value="Sub Module">Sub Module</option>
+                                         <option value="Menu">Menu</option>
+                                     </select>
+                                 </div>-->
+
+
+
+
+                                <div class="col-md-2">
+                                    <label class="control-label required">Status</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-control form-white input-sm" ng-model="Status" required>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gridMH" ui-grid="gridMenuOptions" class="grid" style="height: 400px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+
+
+        </section>
+
+        
+
+    </div>
+
+
+    
+
+
+</div>
+
+
+
+
+

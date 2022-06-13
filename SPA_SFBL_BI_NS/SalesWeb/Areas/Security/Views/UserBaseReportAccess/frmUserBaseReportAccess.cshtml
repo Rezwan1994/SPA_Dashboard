@@ -1,0 +1,181 @@
+﻿<link href="~/Content/css/Customize_Invoice.css" rel="stylesheet" />
+<style>
+        .ui-grid-column-menu-button {
+            display: none;
+        }
+
+    .btn {
+        font: 10px arial, helvetica, sans-serif;
+        padding: 6px 12px;
+    }
+
+</style>
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Areas/Security/NgCode/frmUserBaseReportAccess.js"></script>
+<div ng-app="myApp" ng-controller="UserBaseReportAccessCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmUserBaseReportAccess">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmUserBaseReportAccess.$invalid}" ng-disabled="frmUserBaseReportAccess.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="SearchData()"><i class="fa fa-search"></i>&nbspSearch</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="DeleteUserAccess()"><i class="fa fa-remove"></i>&nbsp Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body">
+
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>User Information</legend>
+                                    
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <label class="control-label hidden required">ID</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <input type="hidden" class="form-control" id="MstId" name="MstId" ng-model="MstId" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <label class="control-label required">User</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <ui-select class="form-control form-white" ng-change="OnUserClick()" ng-model="frmUserBaseReportAccess.User" theme="select2" ng-disabled="isDisbleUser" ng-cloak required>
+                                                    <ui-select-match placeholder="-- Please Select --">{{$select.selected.UserName}}</ui-select-match>
+                                                    <ui-select-choices repeat="user in users | propsFilter: {UserName: $select.search}">
+                                                        <div>
+                                                            <b>User Name: </b><span ng-bind-html="user.UserName | highlight: $select.search"></span>
+                                                        </div>
+                                                        <small>
+                                                            <b>Employee Code: </b> <span ng-bind-html="''+user.EmployeeCode | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                            <b>Employee Name: </b> <span ng-bind-html="''+user.EmployeeName | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-md-2">
+                                                <label class="control-label required">Product Type</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <select class="form-control form-white input-sm" ng-change="OnProductTypeClick()" ng-model="ProductType" id="ProductType" name="ProductType" ng-disabled="isDisbleProductType" required>
+                                                    <option value="BASE_PRODUCT">Base Product</option>
+                                                    <option value="BRAND">Brand</option>
+                                                    <option value="CATEGORY">Category</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                     </fieldset>
+                                <br />
+
+                             </div>
+
+                            
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Product Type Information</legend>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label">{{ProductCategory}}</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnTypeListClick()" ng-model="frmUserBaseReportAccess.TypeList" theme="select2" ng-cloak>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat="TypeList in TypeLists | propsFilter: {Name: $select.search}">
+                                                    <div>
+                                                        <b></b><span ng-bind-html="TypeList.Name | highlight: $select.search"></span>
+                                                    </div>
+                                                    <small>
+                                                        <b>Code: </b> <span ng-bind-html="''+TypeList.Code | highlight: $select.search"></span> &nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        @*<button type="button" class="btn btn-embossed btn-primary" ng-click="AddItem()" ng-class="{'btn-transparent': frmUserBaseReportAccess.$invalid}" ng-disabled="frmUserBaseReportAccess.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>*@
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="AddItem()" ng-class="{'btn-transparent': isDisableAddItem}" ng-disabled="isDisableAddItem"><i class="fa fa-save"></i>&nbsp{{btnAddVaue}}</button>
+
+                                    </div>
+
+
+                                    <div id="gridProductType" ui-grid="gridProductType" class="grid" style="height: 150px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </fieldset>
+                            </div>
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Product Information</legend>
+                                    <div id="gridProduct" ui-grid="gridProduct" class="grid" style="height: 450px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </fieldset>
+                            </div>
+
+                            </div>
+                   
+                    
+                    
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
+
+
+
+    <div class="modal fade" id="SearchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">User Information</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding: 2px;">
+                        <div id="gridSearch" ui-grid="gridSearch" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+

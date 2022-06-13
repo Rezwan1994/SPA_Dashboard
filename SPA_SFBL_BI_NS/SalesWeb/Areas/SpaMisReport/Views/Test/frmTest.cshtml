@@ -1,0 +1,236 @@
+﻿@*<style>
+    .ui-grid-column-menu-button {
+        display: none;
+    }
+
+    .ui-grid {
+        font-size: 12px;
+    }
+
+    body {
+        font-size: 12px;
+    }
+
+    .treeview-menu > li > a {
+        font-size: 12px;
+    }
+
+    legend {
+        font-size: 15px;
+    }
+
+    .btn {
+        font: 12px arial, helvetica, sans-serif;
+        padding: 8px 12px;
+    }
+
+    h5 {
+        color: darkred;
+    }
+</style>*@
+
+
+@*<style>
+    h2 {
+        color: darkred;
+    }
+</style>*@
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/Customize_Invoice.css" rel="stylesheet" />
+<script src="~/Areas/SpaMisReport/NgCode/frmTest.js"></script>
+<div ng-app="myApp" ng-controller="TestCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmTest">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+
+                                @*<div class="col-md-4">
+                                    <input type="text" class="form-control" id="Message " name="Message " ng-model="Message " readonly>
+                                </div>*@
+
+
+                                @*<div class="col-md-4">
+                                    <h2 class="box-title">
+                                        <strong ng-hide="isCheck" ng-cloak>{{ShowMessage}}</strong>
+                                    </h2>
+                                </div>*@
+
+
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="ExcuteTestProcedure()"><i class="fa fa-refresh"></i>&nbsp Call Proc</button>
+
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmTest.$invalid}" ng-disabled="frmTest.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="SearchData()"><i class="fa fa-refresh"></i>&nbsp Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-md-12">
+
+                                <fieldset>
+                                    <legend>Order Information</legend>
+                                    <div class="form-group">
+                                        <div class="col-md-2  ">
+                                            <label class="control-label">Mst Id</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" class="form-control" id="MstId" name="MstId" ng-model="MstId" readonly>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Customer</label>
+                                        </div>
+
+
+
+                                        <div class="col-md-3">
+
+
+
+                                            <ui-select class="form-control" ng-change="OnCustomerClick()" ng-model="frmTest.Customer" theme="select2" ng-disabled="isDisableCustomer" ng-cloak required>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.CustomerName}}</ui-select-match>
+                                                <ui-select-choices repeat="customers in Customers | propsFilter: {CustomerName: $select.search, CustomerCode: $select.search}">
+                                                    <div ng-bind-html="customers.CustomerName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Code: </b><span ng-bind-html="''+customers.CustomerCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="col-md-2">
+                                            <label class="control-label required">Order Status</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control" id="OrderStatus" name="OrderStatus" ng-model="OrderStatus" ng-change="OnOrderStatusClick()" ng-disabled="isDisableOrderStatus" required>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                        </fieldset>
+                                <br/>
+                                    <fieldset>
+                                        <legend>Order Product Information</legend>
+                                        <div class="form-group">
+
+                                            <div class="col-md-1">
+                                                <input type="text" class="form-control" ng-model="MasterId" id="MasterId" name="MasterId" placeholder="Mst Id" readonly />
+                                            </div>
+
+                                            <div class="col-md-1">
+                                                <input type="text" class="form-control" ng-model="DetailId" id="DetailId" name="DetailId" placeholder="Dtl Id" readonly />
+                                            </div>
+
+                                                <div class="col-md-2">
+                                                    <ui-select class="form-control" ng-model="frmTest.Product" ng-change="OnChangeProduct()" theme="select2" ng-cloak ng-disabled="isDisableProduct">
+                                                        <ui-select-match placeholder="-- Please Select Product --">{{$select.selected.ProductName}}</ui-select-match>
+                                                        <ui-select-choices repeat="product in Products | propsFilter: {ProductName: $select.search, ProductCode: $select.search, PackSize: $select.search}">
+                                                            <div ng-bind-html="product.ProductName | highlight: $select.search"></div>
+                                                            <small>
+                                                                <b>Code: </b><span ng-bind-html="''+product.ProductCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                                <b>PackSize: </b><span ng-bind-html="''+product.PackSize | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                            </small>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="control-label">Stock Qty</label>
+                                                </div>
+                                                <div class="col-md-2">
+
+                                                    <input type="text" class="form-control" ng-disabled="isDisabled" name="StockQty" id="StockQty" ng-model="StockQty" readonly>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <label class="control-label">Order Qty</label>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input type="number" class="form-control" ng-disabled="isDisabled" name="OrderQty" id="OrderQty" ng-model="OrderQty">
+                                                </div>
+
+                                                <div class="col-md-2">
+                                                    <div class="text-right  m-t-10">
+                                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="AddItem()"><i class="fa fa-save"></i>&nbspAdd Item</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        <div id="gridOrderDtl" ui-grid="gridOrderDtl" class="grid" style="height: 120px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+
+                                    </fieldset>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="modal fade" id="OrderSearchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Order Information</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding: 2px;">
+                        <div id="gridOrderSearch" ui-grid="gridOrderSearch" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $('.datepicker').datepicker({
+        todayBtn: "linked",
+        autoclose: true,
+        orientation: 'bottom',
+        todayHighlight: true,
+        format: 'dd/mm/yyyy',
+        changeMonth: true,
+        changeYear: true
+    })
+</script>
+
+
+
+

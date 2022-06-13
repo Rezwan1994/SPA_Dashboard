@@ -1,0 +1,74 @@
+﻿
+@*<link href="~/Content/css/Customize_Invoice.css" rel="stylesheet" />
+<style>
+    .ui-grid-column-menu-button {
+        display: none;
+    }
+
+    .btn {
+        font: 10px arial, helvetica, sans-serif;
+        padding: 6px 12px;
+    }
+</style>*@
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Areas/Security/NgCode/frmMaterializedViewRefresh.js"></script>
+<div ng-app="myApp" ng-controller="MaterializedViewRefreshCtrl">
+ 
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+       
+    <div class="form-horizontal" ng-form="frmMaterializedViewRefresh">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        @*<button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmMaterializedViewRefresh.$invalid}" ng-disabled="frmMaterializedViewRefresh.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>*@
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        @*<button type="button" class="btn btn-embossed btn-success" ng-click="SearchData()"><i class="fa fa-search"></i>&nbspSearch</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="DeleteUserAccess()"><i class="fa fa-remove"></i>&nbsp Delete</button>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body">
+
+                            <div class="col-md-12">
+                                <fieldset>
+                                    <legend>Materialized View Refresh Status</legend>
+                                    <div id="gridMaterializedViewRefresh" ui-grid="gridMaterializedViewRefresh" class="grid" style="height: 450px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </fieldset>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+</div>
+
+
+

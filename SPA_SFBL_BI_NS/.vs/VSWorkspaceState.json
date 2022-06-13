@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\SalesWeb",
+    "\\SalesWeb\\Areas",
+    "\\SalesWeb\\Areas\\SpaMisReport",
+    "\\SalesWeb\\Areas\\SpaMisReport\\Controllers",
+    "\\SalesWeb\\Areas\\SpaMisReport\\Views",
+    "\\SalesWeb\\Areas\\SpaMisReport\\Views\\Test"
+  ],
+  "SelectedNode": "\\SalesWeb\\Areas\\SpaMisReport\\Controllers\\TestController.cs",
+  "PreviewInSolutionExplorer": true
+}

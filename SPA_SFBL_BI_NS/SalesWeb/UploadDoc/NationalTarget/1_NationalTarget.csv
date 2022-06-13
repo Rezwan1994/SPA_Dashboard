@@ -1,0 +1,4 @@
+NationalTargetId,ProductDtlId,ProductCode,ProductName,PackSize,UnitTPBox,UnitVATBox,YyyyMm,TargetQty,RevisedTargetQty,Status,Remarks,Action 
+1,1,C0001,Aclonac Tablet,50's,150,26,202001,113,113,Active,asda,
+2,2,C0002,Xelpro 20 mg Capsule,80's,123,123,202001,12,12,Active,,
+2,1212,C0002,Xelpro 20 mg Capsule,80's,123,123,202001,12,12,Active,,

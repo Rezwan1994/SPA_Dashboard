@@ -1,0 +1,144 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/SpaMisTransaction/ngCode/frmDistProductFactoryRelation.js"></script>
+<script>
+    var CurrentDate = '@ViewBag.CurentDate';
+</script>
+<div ng-app="myApp" ng-controller="DistProductFactoryRelationCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmDistProductFactoryRelation">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmDistProductFactoryRelation.$invalid||isDisablebtnSaveValue}" ng-disabled="frmDistProductFactoryRelation.$invalid||isDisablebtnSaveValue "><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="SearchMstData()"><i class="fa fa-search"></i>&nbspSearch</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="DeleteMstDtl()"><i class="fa fa-remove"></i>&nbsp Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="box-body">
+                            <fieldset>
+                                <legend>Customer Information</legend>
+                                <div class="form-group">
+
+                                    <div class="col-md-2">
+                                        <label class="control-label">Sl. No.</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" id="MstId" name="MstId" ng-model="MstId" placeholder="Auto Generated" readonly>
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="control-label">Customer</label>
+                                    </div>
+                                    <div class="col-md-4">                                       
+                                        <ui-select class="form-control form-white" ng-change="OnCustomerClick()" ng-model="frmDistProductFactoryRelation.Customer" theme="select2" ng-cloak required>
+                                            <ui-select-match placeholder="-- Please Select --">{{$select.selected.CustomerName}}</ui-select-match>
+                                            <ui-select-choices repeat="customers in Customers | propsFilter: {CustomerName: $select.search, CustomerCode: $select.search}">
+                                                <div ng-bind-html="customers.CustomerName | highlight: $select.search"></div>
+                                                <small>
+                                                    <b>Code: </b><span ng-bind-html="''+customers.CustomerCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                </small>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <br />
+
+                                <fieldset>
+                                    <legend>Product Information</legend>
+                                    <div class="form-group">
+                                        <div class="col-md-1">
+                                            <label class="control-label required">Product</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnChangeProduct()" ng-model="frmDistProductFactoryRelation.Product" theme="select2" ng-cloak >
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.ProductName}}</ui-select-match>
+                                                <ui-select-choices repeat="Product in Products | propsFilter: {ProductName: $select.search, ProductCode: $select.search}">
+                                                    <div ng-bind-html="Product.ProductName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Product Code: </b><span ng-bind-html="''+Product.ProductCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                        <b>Pack Size: </b><span ng-bind-html="''+Product.PackSize | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <div class="col-md-1">
+                                            <label class="control-label">Factory</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <ui-select class="form-control form-white" ng-change="OnFactoryClick()" ng-model="frmDistProductFactoryRelation.Factory" theme="select2" ng-cloak>
+                                                <ui-select-match placeholder="-- Please Select --">{{$select.selected.FactoryName}}</ui-select-match>
+                                                <ui-select-choices repeat="factory in factories | propsFilter: {FactoryName: $select.search, FactoryCode: $select.search}">
+                                                    <div ng-bind-html="factory.FactoryName | highlight: $select.search"></div>
+                                                    <small>
+                                                        <b>Factory Code: </b><span ng-bind-html="''+factory.FactoryCode | highlight: $select.search"></span> &nbsp;&nbsp;&nbsp;
+                                                    </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="AddItem()" ng-class="{'btn-transparent': isDisableAddItem}" ng-disabled="isDisableAddItem"><i class="fa fa-save"></i>&nbsp{{btnAddVaue}}</button>
+                                    </div>
+                                    
+                                    <div id="DistProductFactoryRelationGrid" ui-grid="DistProductFactoryRelationGrid" class="grid" style="height: 300px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                                </fieldset>
+
+                           </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </section>
+    </div>
+
+
+    <div class="modal fade" id="SearchModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Customer Information</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding: 2px;">
+                        <div id="gridSearch" ui-grid="gridSearch" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns ui-grid-exporter></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+

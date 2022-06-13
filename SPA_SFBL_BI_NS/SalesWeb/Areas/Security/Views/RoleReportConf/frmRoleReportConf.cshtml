@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmRoleReportConf.js"></script>
+<div ng-app="myApp" ng-controller="roleReportConfCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmRoleReportConf">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmRoleReportConf.$invalid}" ng-disabled="frmRoleReportConf.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="GetRoleReportConfList()"><i class="fa fa-search"></i>&nbspSearch</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Role</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="hidden" ng-model="Id" />
+                                    <ui-select class="form-control form-white" ng-cloak ng-change="OnRoleInfoClick()" ng-model="frmRoleReportConf.RoleInfo" theme="select2" required>
+                                        <ui-select-match placeholder="-- Please Select --">{{$select.selected.RoleName}}</ui-select-match>
+                                        <ui-select-choices repeat=" roles in Roles | propsFilter: {RoleName: $select.search}">
+                                            <div ng-bind-html="roles.RoleName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Report</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control form-white" ng-cloak  ng-model="frmRoleReportConf.Report" theme="select2" required>
+                                        <ui-select-match placeholder="-- Please Select --">{{$select.selected.ReportName}}</ui-select-match>
+                                        <ui-select-choices repeat="reports in Reports | propsFilter: {ReportName: $select.search}">
+                                            <div ng-bind-html="reports.ReportName | highlight: $select.search"></div>
+                                           
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+
+                            <br />
+                            <br />
+                            <div id="gridR" ui-grid="gridOptions" class="grid" style="height: 250px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+

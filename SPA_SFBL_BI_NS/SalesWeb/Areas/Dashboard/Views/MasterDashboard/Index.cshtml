@@ -1,0 +1,994 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SalesWeb.Areas.Dashboard.Models.BEL.DashboardModel
+
+<link href="~/Content/css/fontawesome-free/css/all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<style>
+    .barIcon {
+        display: block !important;
+    }
+
+    .graph {
+        border: 1px solid #ddd;
+    }
+
+    .pieGraph {
+        margin-top: 10px;
+    }
+
+    .subtitle, .ion {
+        color: white;
+    }
+
+    .salesBlock {
+        background-color: #00B4A8;
+    }
+
+    .targetBlock {
+        background-color: #54C181;
+    }
+
+    .yearlyTargetBlock {
+        background-color: #E6B650
+    }
+
+    .chartbox {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container-fluid">
+    <section class="content-header" style="top:-25px">
+        <h1>
+            Dashboard
+            <small>Control panel</small>
+        </h1>
+    </section>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info salesBlock">
+
+            </div>
+        </div>
+        <!-- ./col -->
+        <!-- ./col -->
+
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box targetBlock" style=" background-color: #99C25A">
+                <table class="table" style="margin-bottom:-5px;color:white">
+                    <tr>
+                        <th style="color:black;">MTD,@ViewBag.Year</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Target</td>
+                        <td>@string.Format("{0:N}", Model.MonthlyTargetModel.TargetValue) cr</td>
+                    </tr>
+                    <tr>
+                        <td>Sales</td>
+                        <td>@string.Format("{0:N}", Model.MonthlySalesModel.SalesValue) cr</td>
+                    </tr>
+                    <tr>
+                        <td>Return</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Achivement</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Growth</td>
+                        <td>88</td>
+                    </tr>
+                </table>
+
+                <div class="icon barIcon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box targetBlock" style=" background-color: #1C6C82">
+                <table class="table" style="margin-bottom:-5px;color:white;">
+
+                    <tr>
+                        <th style="color:black;">YTD,@ViewBag.Year</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Target</td>
+                        <td>@string.Format("{0:N}", Model.YearlyTargetModel.TargetValue) cr</td>
+                    </tr>
+                    <tr>
+                        <td>Sales</td>
+                        <td>@string.Format("{0:N}", Model.YearlySalesModel.SalesValue) cr</td>
+                    </tr>
+                    <tr>
+                        <td>Return</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Achivement</td>
+                        <td>88</td>
+                    </tr>
+                    <tr>
+                        <td>Growth</td>
+                        <td>88</td>
+                    </tr>
+                </table>
+
+                <div class="icon barIcon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box targetBlock" style=" height:222px;color:white;">
+                <table class="table">
+
+                    <tr>
+                        <th></th>
+                        <th>PC</th>
+                        <th>LPC</th>
+                    </tr>
+                    <tr>
+                        <td>Today</td>
+                        <td>3333</td>
+                        <td>3333</td>
+                    </tr>
+                    <tr>
+                        <td>MTD</td>
+                        <td>66</td>
+                        <td>66</td>
+                    </tr>
+                    <tr>
+                        <td>YTD</td>
+                        <td>88</td>
+                        <td>88</td>
+                    </tr>
+                </table>
+                <a href="#" class="small-box-footer" style="margin-top: 62px">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <div class="row">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+
+
+            <figure class="highcharts-figure graph">
+                <div id="container6"></div>
+
+            </figure>
+
+        </section>
+    </div>
+    <div class="row">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+            <figure class="highcharts-figure graph">
+                <div id="container7"></div>
+            </figure>
+        </section>
+    </div>
+    <div class="row chartbox">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <figure class="highcharts-figure graph">
+                <div id="container8"></div>
+
+            </figure>
+
+        </section>
+    </div>
+    <div class="row chartbox">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <figure class="highcharts-figure graph">
+                <div id="container9"></div>
+
+            </figure>
+
+        </section>
+    </div>
+    <div class="row chartbox">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <figure class="highcharts-figure graph">
+                <div id="container10"></div>
+
+            </figure>
+
+        </section>
+    </div>
+    <div class="row chartbox">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <figure class="highcharts-figure graph">
+                <div id="container2"></div>
+
+            </figure>
+
+        </section>
+    </div>
+    <div class="row chartbox">
+
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <div class="card">
+
+                <figure class="highcharts-figure graph">
+                    <div id="container"></div>
+
+                </figure>
+            </div>
+        </section>
+
+    </div>
+    <div class="row chartbox">
+        <section class="col-lg-12 connectedSortable ui-sortable">
+
+            <div class="card">
+
+                <figure class="highcharts-figure graph">
+                    <div id="container0"></div>
+                </figure>
+            </div>
+        </section>
+    </div>
+    <div class="row pieGraph">
+
+        <section class="col-lg-4 connectedSortable ui-sortable">
+
+            <div class="card">
+
+                <figure class="highcharts-figure graph">
+                    <div id="container3"></div>
+
+                </figure>
+            </div>
+        </section>
+        <section class="col-lg-4 connectedSortable ui-sortable">
+
+            <div class="card">
+
+                <figure class="highcharts-figure graph">
+                    <div id="container4"></div>
+
+                </figure>
+            </div>
+        </section>
+        <section class="col-lg-4 connectedSortable ui-sortable">
+
+            <div class="card">
+
+                <figure class="highcharts-figure graph">
+                    <div id="container5"></div>
+
+                </figure>
+            </div>
+        </section>
+
+    </div>
+</div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script type="text/javascript">
+    var error = '@ViewBag.Error';
+    var array = @Html.Raw(Json.Encode(@ViewBag.ImsArray1));
+    var array2 = @Html.Raw(Json.Encode(@ViewBag.ImsArray2));
+    var array3 = @Html.Raw(Json.Encode(@ViewBag.xAxisCategoryList));
+    var returnarray = @Html.Raw(Json.Encode(@ViewBag.ReturnArray));
+    var returnarray = @Html.Raw(Json.Encode(@ViewBag.ReturnArray));
+    var pcTrendarray = @Html.Raw(Json.Encode(@ViewBag.PcTrendArray));
+    var productWiseSales =  @Html.Raw(Json.Encode(@ViewBag.productSalesResults));
+    var brandSalesResults  =  @Html.Raw(Json.Encode(@ViewBag.brandSalesResults));
+    var categorySalesResults  =  @Html.Raw(Json.Encode(@ViewBag.categorySalesResults));
+    var physicalStrockArray = @Html.Raw(Json.Encode(@ViewBag.physicalStrockArray));
+    var curentVolumekArray = @Html.Raw(Json.Encode(@ViewBag.curentVolumeArray));
+        var lastVolumeArray = @Html.Raw(Json.Encode(@ViewBag.lastVolumeArray));
+    var pipeLineStrockArray = @Html.Raw(Json.Encode(@ViewBag.pipeLineStrockArray));
+
+    var curentSalesList = @Html.Raw(Json.Encode(@ViewBag.curentSalesList));
+    var curentTargetList = @Html.Raw(Json.Encode(@ViewBag.curentTargetList));
+    var curentACHList = @Html.Raw(Json.Encode(@ViewBag.curentACHList));
+
+    var lastSalesList = @Html.Raw(Json.Encode(@ViewBag.lastSalesList));
+    var lastTargetList = @Html.Raw(Json.Encode(@ViewBag.lastTargetList));
+    var lastACHList = @Html.Raw(Json.Encode(@ViewBag.lastACHList));
+
+    var fiveYearsTargetList = @Html.Raw(Json.Encode(@ViewBag.fiveYearsTargetList));
+    var fiveYearsSaleList = @Html.Raw(Json.Encode(@ViewBag.fiveYearsSaleList));
+    var yearList = @Html.Raw(Json.Encode(@ViewBag.yearList));
+
+
+        var chart = Highcharts.chart('container', {
+            chart: {
+                type: 'column',
+                backgroundColor: "#ECF0F5"
+            },
+            title: {
+                text: 'Day Wise IMS Value'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+            },
+            yAxis: {
+                title: {
+                    text: 'Amount'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span></br><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} cr</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+
+            series: [{
+                name: 'Current year target',
+                color: '#035369',
+                data: curentTargetList,
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                }
+            }, {
+                name: 'Current year Sales',
+                data: curentSalesList,
+                color: '#80A941',
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                }
+
+            }, {
+                name: 'Current year Achivement',
+                data: curentACHList,
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                },
+                tooltip: {
+                    pointFormatter: function () {
+                        return 'ACH: <b> ' + this.y + ' %</b>.'
+                    }
+                }
+            }]
+        });
+
+        var chart0 = Highcharts.chart('container0', {
+            chart: {
+                type: 'column',
+                backgroundColor: "#ECF0F5"
+            },
+            title: {
+                text: 'Day Wise IMS Value'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+            },
+            yAxis: {
+                title: {
+                    text: 'Amount'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span></br><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} cr</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+
+            series: [{
+                name: 'Last year target',
+                color: '#017079',
+                data: lastTargetList,
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                }
+            }, {
+                name: 'Last year Sales',
+                data: lastSalesList,
+                color: '#70B711',
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                }
+
+            }, {
+                name: 'Last year Achivement',
+                data: lastACHList,
+                color: '#999EFF',
+                dataLabels: {
+                    enabled: true,
+                    borderRadius: 5,
+                    backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                    borderWidth: 1,
+                    borderColor: '#AAA',
+                    y: -6
+                },
+                tooltip: {
+                    pointFormatter: function () {
+                        return 'ACH: <b> ' + this.y + ' %</b>.'
+                    }
+                }
+            }]
+        });
+
+
+    var chart2 = $(function () {
+        var chartype = {
+            type: 'bar',
+            backgroundColor: "#ECF0F5"
+        }
+        var chartitle = {
+            text: ''
+        }
+
+        var chartxaxis = {
+            categories: yearList,
+            title: {
+                text: null
+            }
+        }
+        var chartyaxis = {
+            min: 0,
+            title: {
+                text: 'Amount',
+                align: 'high'
+            },
+            labels: {
+                overflow: 'justify'
+
+            }
+        }
+        //var chartooltip = {
+        //    valueSuffix: ' millions'
+        //}
+        var chartplotoptions = {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        }
+        var chartlegend = {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        }
+        var chartcredits = {
+            enabled: false
+        }
+        var chartseries = [{
+            name: 'Target',
+            color:"#2F7ABE",
+            data: fiveYearsTargetList
+        },
+        {
+            name: 'Sales',
+            color: "#33B2C3",
+            data: fiveYearsSaleList
+        }]
+        $('#container2').highcharts({
+
+            chart: chartype,
+            title: chartitle,
+            xAxis: chartxaxis,
+            yAxis: chartyaxis,
+            //tooltip: chartooltip,
+            plotOptions: chartplotoptions,
+            legend: chartlegend,
+            credits: chartcredits,
+            series: chartseries
+        });
+    });
+    var chart3 = $(function () {
+        var chartype = {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            },
+            backgroundColor: "#ECF0F5",
+        }
+        var chartitle = {
+            text: 'Brand Wise Sales'
+        }
+        var chartooltip = {
+            pointFormat: '{series.name}: <b>{point.y} cr</b>'
+        }
+        var chartplotoptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+
+        }
+        var chartseries = [{
+            name: 'IMS Value',
+            data: brandSalesResults
+        }]
+        $('#container3').highcharts({
+            chart: chartype,
+            title: chartitle,
+            tooltip: chartooltip,
+            plotOptions: chartplotoptions,
+            series: chartseries
+        });
+    });
+    var chart4 = $(function () {
+        var chartype = {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45
+            },
+            backgroundColor: "#ECF0F5"
+        }
+        var chartitle = {
+            text: 'Product Wise Sales'
+        }
+        var chartooltip = {
+            pointFormat: '{series.name}: <b>{point.y} %</b>'
+        }
+        var chartsubtitle = {
+            text: ''
+        }
+        var chartplotoptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.y} %'
+                }
+            }
+
+
+        }
+        var chartseries = [{
+            name: 'IMS Value',
+            data: productWiseSales
+        }]
+        $('#container4').highcharts({
+            chart: chartype,
+            title: chartitle,
+            subtitle: chartsubtitle,
+            tooltip: chartooltip,
+            plotOptions: chartplotoptions,
+            series: chartseries
+        });
+    });
+    var chart5 = $(function () {
+        var chartype = {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+            backgroundColor: "#ECF0F5"
+        }
+        var chartitle = {
+            text: 'Category Wise Sale'
+        }
+        var chartooltip = {
+            pointFormat: '{series.name}: <b>{point.y} %</b>'
+        }
+        var chartplotoptions = {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    distance: '-30',
+                    format: '{point.y} %'
+                },
+                showInLegend: true
+            }
+        }
+        var chartseries = [{
+            name: 'IMS Value',
+            colorByPoint: true,
+            data: categorySalesResults
+        }]
+        $('#container5').highcharts({
+            chart: chartype,
+            title: chartitle,
+            tooltip: chartooltip,
+            plotOptions: chartplotoptions,
+            series: chartseries,
+
+        });
+    });
+    var chart6 = Highcharts.chart('container6', {
+        chart: {
+            type: 'column',
+            backgroundColor: "#ECF0F5"
+        },
+        title: {
+            text: 'Day Wise IMS Value'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            categories: [],
+
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Amount'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} cr</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        //plotOptions: {
+        //    column: {
+        //        colorByPoint: true
+        //    }
+        //},
+        //colors: [
+        //    '#A3EDBA'
+        //],
+        series: [{
+            name: 'Current Year IMS Value',
+            color: "#80A941",
+            data: [],
+            dataLabels: {
+                enabled: true,
+                borderRadius: 5,
+                backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                borderWidth: 1,
+                borderColor: '#AAA',
+                y: -6
+
+            }
+
+
+        }, {
+            name: 'Last Year IMS Value',
+            color: "#797876",
+            data: [],
+            dataLabels: {
+                enabled: true,
+                borderRadius: 5,
+                backgroundColor: 'rgba(252, 255, 197, 0.7)',
+                borderWidth: 1,
+                borderColor: '#AAA',
+                y: -6
+            }
+
+        }]
+    });
+
+    var chart8 = Highcharts.chart('container8', {
+        chart: {
+            type: 'spline',
+            backgroundColor: "#ECF0F5",
+            scrollablePlotArea: {
+                minWidth: 600,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Returned % (Day Wise)'
+
+        },
+        subtitle: {
+            text: '',
+            align: 'left'
+        },
+        xAxis: {
+            categories: [],
+
+        },
+        yAxis: {
+            title: {
+                text: 'Amount'
+            }
+
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        series: [{
+            name: 'Amount',
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: 300,
+                color: '#BC4B4D',
+                y: -6,
+
+            }
+        }],
+        navigation: {
+            menuItemStyle: {
+                fontSize: '10px'
+            }
+        }
+    });
+    var chart9 = Highcharts.chart('container9', {
+        chart: {
+            type: 'spline',
+            backgroundColor: "#ECF0F5",
+            options3d: {
+                enabled: true,
+                //alpha: 15,
+                //beta: 30,
+                //depth: 200
+            }
+        },
+        title: {
+            text: "Day Wise Productivity Call"
+        },
+        xAxis: {
+            categories: [],
+
+        },
+        yAxis: {
+            title: {
+                text: 'Amount'
+            }
+
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} cr</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        series: [{
+            name:"",
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: 300,
+                color: '#BC4B4D',
+                y: -6,
+
+            }
+        }],
+    });
+
+        var chart7 = Highcharts.chart('container7', {
+            chart: {
+                type: 'spline',
+                backgroundColor: "#ECF0F5",
+            },
+            title: {
+                text: 'Day Wise IMS Volume Trend'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                min: 0,
+                title: {
+                    text: 'Amount (Ton)'
+                }
+
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y} ton</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+
+            series: [{
+                name: 'Current Year Volume Trend',
+
+                data: [],
+                dataLabels: {
+                    enabled: true,
+                    rotation: 300,
+                    color: '#BC4B4D',
+                    y: -6,
+
+                }
+            }, {
+                name: 'Last Year Volume Trend',
+                data: [],
+                dataLabels: {
+                    enabled: true,
+                    rotation: 300,
+                    color: '#BC4B4D',
+                    y: -6,
+
+                }
+            }]
+        });
+    var chart10 = Highcharts.chart('container10', {
+        chart: {
+            type: 'spline',
+            backgroundColor: "#ECF0F5",
+        },
+        title: {
+            text: 'Day Wise Physical & Transit Stock'
+        },
+        subtitle: {
+            text: ''
+        },
+        xAxis: {
+            min: 0,
+            title: {
+                text: 'Amount'
+            }
+
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} cr</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+
+        series: [{
+            name: 'Physical Stock',
+
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: 300,
+                color: '#BC4B4D',
+                y: -6,
+
+            }
+        }, {
+            name: 'Transit Stock',
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: 300,
+                color: '#BC4B4D',
+                y: -6,
+
+            }
+        }]
+    });
+
+    $(document).ready(function () {
+        function fnBlink() {
+            $(".blink").fadeOut(6000);
+            $(".blink").fadeIn(1000);
+            $(".salesBlock").load("/Dashboard/MasterDashboard/TodaySalesPartial");
+
+        }
+        setInterval(fnBlink, 30000);
+
+        $(".salesBlock").load("/Dashboard/MasterDashboard/TodaySalesPartial");
+
+        console.log(array3);
+        console.log(array2);
+
+        //chart.render();
+        //chart2.render();
+        //chart3.render();
+
+        //chart4.render();
+        //chart5.render();
+        chart6.series[0].setData(array);
+        chart6.series[1].setData(array2);
+        chart6.xAxis[0].setCategories(array3);
+        chart6.render();
+
+        chart7.series[0].setData(curentVolumekArray);
+        chart7.series[1].setData(lastVolumeArray);
+        chart7.xAxis[0].setCategories(array3);
+
+        chart8.series[0].setData(returnarray);
+        chart8.xAxis[0].setCategories(array3);
+        chart8.render();
+        chart9.series[0].setData(pcTrendarray);
+        chart9.xAxis[0].setCategories(array3);
+        chart9.render();
+        //chart8.render();
+        //chart9.render();
+        //chart10.render();
+        chart10.series[0].setData(physicalStrockArray);
+        chart10.series[1].setData(pipeLineStrockArray);
+        chart10.xAxis[0].setCategories(array3);
+        chart6.render();
+    })
+</script>
+

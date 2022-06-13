@@ -1,0 +1,110 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Security/NgCode/frmReportInfo.js"></script>
+<div ng-app="myApp" ng-controller="ReportInfoCtrl">
+    <div class="loader LoaderStyle" ng-cloak data-loading>
+        <img src="~/Content/img/loader.gif" width="100" height="100" style="top: 50%; left: 50%;" />
+    </div>
+    <div class="form-horizontal" ng-form="frmReportInfo">
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-warning">
+                        <div class="box-header with-border">
+                            <div class="form-group">
+                                <div class="col-md-5">
+                                    <h2 class="box-title">
+                                        <strong ng-cloak>{{FormTitle}}</strong>
+                                    </h2>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="text-right  m-t-10">
+                                        <button type="button" class="btn btn-embossed btn-primary" ng-click="SaveData()" ng-class="{'btn-transparent': frmReportInfoInfo.$invalid}" ng-disabled="frmReportInfoInfo.$invalid"><i class="fa fa-save"></i>&nbsp{{btnSaveValue}}</button>
+                                        <button type="button" class="btn btn-embossed btn-danger" ng-click="Reset()"><i class="fa fa-refresh"></i>&nbsp Reset</button>
+                                        <button type="button" class="btn btn-embossed btn-success" ng-click="GetReportList()"><i class="fa fa-search"></i>&nbspSearch</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-body">
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">Report Code</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="ReportId" name="ReportId" ng-model="ReportId" placeholder="Auto Generated" readonly>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Report Name</label>
+                                </div>
+                                <div class="col-md-3" ng-class="{'has-error':frmReportInfo.ReportName.$error.maxlength}">
+                                    <input type="text" class="form-control" id="Name" name="ReportName" ng-model="ReportName" placeholder="Report" ng-maxlength="50" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required"> Display Name</label>
+                                </div>
+                                <div class="col-md-3" ng-class="{'has-error':frmReportInfo.DisplayName.$error.maxlength}">
+                                    <input type="text" class="form-control" id="DisplayName" name="DisplayName" ng-model="DisplayName" placeholder="Display Name" ng-maxlength="50" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="control-label required">Form Name</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <ui-select class="form-control form-white" ng-model="frmReportInfo.Form" theme="select2" required>
+                                        <ui-select-match placeholder="-- Please Select --">{{$select.selected.FormName}}</ui-select-match>
+                                        <ui-select-choices repeat="formNames in FormNames | propsFilter: {FormName: $select.search}">
+                                            <div ng-bind-html="formNames.FormName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <label class="control-label required">URL</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="FormUrl" name="FormUrl" ng-model="FormUrl" required>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="gridMH" ui-grid="gridReportOptions" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+
+        </section>
+    </div>
+    @*<div class="modal fade" id="ReportListModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Report List</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="padding: 2px;">
+                        <div id="gridMH" ui-grid="gridReportOptions" class="grid" style="height: 350px; width: 100%;" ui-grid-auto-resize ui-grid-resize-columns></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+
+
+
+
